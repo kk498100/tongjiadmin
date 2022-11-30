@@ -1,0 +1,70 @@
+@import "../../assets/styles/_variable.scss";
+
+.layout {
+  &--navbar {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: {
+      left: 20px;
+      right: 20px;
+    }
+    border-bottom: 1px solid rgba(229, 230, 235, 1);
+
+    &-logo {
+      object-fit: contain;
+      flex: none;
+    }
+
+    &-content {
+      flex: 1;
+      height: 100%;
+      background-image: radial-gradient(transparent 1px, var(--bg-color) 1px);
+      background-size: 4px 4px;
+      backdrop-filter: saturate(50%) blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      &-notify {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        text-align: center;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        color: $primary;
+        background-color: rgb(242, 243, 245);
+        margin-left: 16px;
+        line-height: 32px;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      &-user-info {
+        display: flex;
+        align-items: center;
+        margin-left: 16px;
+        cursor: pointer;
+
+        &-avatar {
+          width: 32px;
+          height: 32px;
+          background-color: transparent;
+          border-radius: 50%;
+          object-fit: cover;
+          overflow: hidden;
+        }
+
+        &-name {
+          color: $black;
+          font-size: 12px;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+}
