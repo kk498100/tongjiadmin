@@ -1,0 +1,55 @@
+@import "../../assets/styles/_variable.scss";
+
+.online {
+  display: flex;
+  align-items: center;
+
+  &-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    position: relative;
+    margin-right: 3px;
+
+    &.on {
+      background-color: $primary;
+
+      &::before {
+        content: '';
+        position: absolute;
+        background: inherit;
+        border-radius: inherit;
+        width: 100%;
+        height: 100%;
+        animation: wave 2s infinite;
+      }
+    }
+
+    &.off {
+      background-color: $info;
+    }
+  }
+
+  &-text {
+    line-height: 1;
+
+    &.on {
+      color: $primary;
+    }
+
+    &.off {
+      color: $info;
+    }
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
