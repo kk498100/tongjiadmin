@@ -9,7 +9,7 @@ export default defineConfig(({ command, mode }) => {
         plugins: [
             react(),
             legacy({
-                targets: ['default', 'IE 11']
+                targets: ['defaults', 'IE 11']
             }),
             vitePluginForArco({
                 theme: '@arco-themes/react-arco-pro',
