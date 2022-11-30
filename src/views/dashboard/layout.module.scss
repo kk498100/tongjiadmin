@@ -8,15 +8,29 @@
     align-items: center;
     justify-content: space-between;
     height: 60px;
-    padding: {
-      left: 20px;
-      right: 20px;
-    }
     border-bottom: 1px solid rgba(229, 230, 235, 1);
+    position: relative;
+    z-index: 999;
+
+    &-logo-wrapper {
+      width: 230px;
+      height: 100%;
+      background-color: $white;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
 
     &-logo {
       object-fit: contain;
       flex: none;
+    }
+
+    &-popup {
+      .arco-popover-content {
+        padding: 0;
+      }
     }
 
     &-content {
@@ -28,6 +42,8 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      padding-right: 20px;
+      box-sizing: border-box;
 
       &-notify {
         width: 32px;
@@ -64,6 +80,58 @@
           font-size: 12px;
           margin-left: 4px;
         }
+      }
+    }
+  }
+
+  &-slider-wrapper {
+    box-sizing: border-box;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    padding-top: 60px;
+
+    &-menu-wrapper {
+      overflow: auto;
+      height: 100%;
+
+      :global(.arco-menu-item-inner > a::after),
+      :global(.arco-menu-item > a::after) {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+      }
+
+      :global(.arco-menu-inline-header) {
+        font-weight: 500;
+      }
+    }
+
+    &-collapse-btn {
+      height: 24px;
+      width: 24px;
+      background-color: rgba(247, 248, 255, 1);
+      color: rgba(134, 144, 156, 1);
+      border-radius: 2px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // 位置
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+
+      &:hover {
+        background-color: rgba(229, 230, 235, 1);
       }
     }
   }

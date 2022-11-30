@@ -5,7 +5,7 @@ export const useUserStore = create((set) => ({
     isLogin: jsCookie.get('_TOKEN_KEY_') ?? false,
     loginIn: () => set(() => ({ isLogin: true })),
     loginOut: () => set(() => {
-        jsCookie.remote('_TOKEN_KEY_')
+        jsCookie.remove('_TOKEN_KEY_')
         window.history.replaceState(null, '')
         return { isLogin: false }
     }),
