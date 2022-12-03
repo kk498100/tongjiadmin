@@ -12,7 +12,7 @@ export default defineConfig(({ command, mode }) => {
                 targets: ['defaults', 'IE 11']
             }),
             vitePluginForArco({
-                theme: '@arco-themes/react-arco-pro',
+                theme: '@arco-themes/react-basement',
                 style: 'css'
             })
         ],
