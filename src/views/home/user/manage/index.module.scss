@@ -1,0 +1,13 @@
+.search-form{
+  &--append {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+}
+
+.data-table {
+  .arco-table-cell-wrap-value {
+    white-space: nowrap;
+  }
+}

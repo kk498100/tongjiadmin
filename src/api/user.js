@@ -21,3 +21,11 @@ export const fetchBaseInfo = (data = {}) =>
  */
 export const fetchNoReadNotify = (data = {}) =>
     request.post(`${ prefix }/noread`, data)
+
+/**
+ * @description 获取管理员列表api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchManageList = (data = {}) =>
+    request.post(`${ prefix }/manageList`, data)
