@@ -1,6 +1,94 @@
-import { Button, Empty, Space, Table } from '@arco-design/web-react'
+import { Button, Empty, Message, Modal, Space, Table } from '@arco-design/web-react'
 import styles from './index.module.scss'
 import Online from '@/components/Online/index.jsx'
+import dayjs from 'dayjs'
+import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { fetchChangeStatus } from '@/api/user.js'
+
+const DataModal = forwardRef((props, ref) => {
+    const [offVisible, setOffVisible] = useState(false)
+    const [onlineVisible, setOnlineVisible] = useState(false)
+
+    const [offLoading, setOffLoading] = useState(false)
+    const [onlineLoading, setOnlineLoading] = useState(false)
+
+    useImperativeHandle(ref, () => ({
+        setOffVisible,
+        setOnlineVisible
+    }))
+
+    const {
+        item: {
+            id = null,
+            nick = ''
+        },
+        tableFresh
+    } = props
+
+    const offConfirmClick = async () => {
+        try {
+            if (offLoading) return
+            setOffLoading(true)
+            const params = {
+                ids: id instanceof Array ? id : [id],
+                status: 2
+            }
+            await fetchChangeStatus(params)
+            tableFresh()
+            Message.success(`${ nick }状态已设置为休息中!`)
+            setOffVisible(false)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setOffLoading(false)
+        }
+    }
+
+    const onlineConfirmClick = async () => {
+        try {
+            if (offLoading) return
+            setOffLoading(true)
+            const params = {
+                ids: id instanceof Array ? id : [id],
+                status: 1
+            }
+            await fetchChangeStatus(params)
+            tableFresh()
+            Message.success(`${ nick }状态已设置为值班中!`)
+            setOffVisible(false)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setOffLoading(false)
+        }
+    }
+
+    return <>
+        <Modal
+            title='休息设置'
+            visible={ offVisible }
+            onCancel={ () => setOffVisible(false) }
+            okButtonProps={ {
+                loading: offLoading
+            } }
+            onConfirm={ offConfirmClick }
+        >
+            <div>设置之后该管理员将不会收到用户问卷信息，<span style={ { color: '#F53F3F' } }>你还要继续吗？</span></div>
+        </Modal>
+
+        <Modal
+            title='值班设置'
+            visible={ onlineVisible }
+            onCancel={ () => setOnlineVisible(false) }
+            okButtonProps={ {
+                loading: onlineLoading
+            } }
+            onConfirm={ onlineConfirmClick }
+        >
+            <div>设置之后该管理员将接收用户问卷信息，<span style={ { color: '#F53F3F' } }>你还要继续吗？</span></div>
+        </Modal>
+    </>
+})
 
 const DataTable = props => {
     const {
@@ -9,8 +97,27 @@ const DataTable = props => {
         dataList,
         total,
         pageChange = null,
-        pageIndex
+        pageIndex,
+        tableFresh
     } = props
+
+    const modalRef = useRef(null)
+
+    const offClick = () => {
+        const {
+            setOffVisible
+        } = modalRef.current
+
+        setOffVisible(true)
+    }
+
+    const onlineClick = () => {
+        const {
+            setOnlineVisible
+        } = modalRef.current
+
+        setOnlineVisible(true)
+    }
 
     const columns = [
         {
@@ -24,6 +131,16 @@ const DataTable = props => {
         {
             title: '手机号',
             dataIndex: 'phone'
+        },
+        {
+            title: '创建日期',
+            dataIndex: 'createTime',
+            render: (col, item, index) => {
+                const {
+                    createTime: a = Date.now()
+                } = item
+                return dayjs(a).format('YYYY-MM-DD HH:mm')
+            }
         },
         {
             title: '状态',
@@ -52,12 +169,16 @@ const DataTable = props => {
                 return <Space size={ 4 }>
                     { a === 1
                         ? <Button type='primary'
-                                  size='mini'>休息</Button>
+                                  size='mini'
+                                  onClick={ offClick }>休息</Button>
                         : <Button type='primary'
-                                  size='mini'>值班</Button>
+                                  size='mini'
+                                  onClick={ onlineClick }>值班</Button>
                     }
                     <Button type='primary'
                             size='mini'>编辑</Button>
+
+                    <DataModal ref={ modalRef } { ...{ item, tableFresh } } />
                 </Space>
             }
         }

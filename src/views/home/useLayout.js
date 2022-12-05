@@ -164,21 +164,21 @@ export const useLayoutMenu = () => {
     menuTab.map(e => {
         e.children?.length && e.children.map(i => childList.push(i))
     })
-    const [defaultOpenKeys, setDefaultOpenKeys] = useState([menuTab.find(v => pathname.indexOf(v.name) !== -1).key])
-    const [defaultSelectedKeys, setDefaultSelectedKeys] = useState([childList.find(v => pathname === v.path).key])
+    const [defaultOpenKeys, setDefaultOpenKeys] = useState([menuTab.find(v => pathname.indexOf(v.name) !== -1)?.key])
+    const [defaultSelectedKeys, setDefaultSelectedKeys] = useState([childList.find(v => pathname === v.path)?.key])
 
     const [currentBreadcrumb, setCurrentBreadcrumb] = useState(null)
 
     useEffect(() => {
-        const icon = menuTab.find(v => pathname.indexOf(v.name) !== -1).icon
-        const title = menuTab.find(v => pathname.indexOf(v.name) !== -1).title
-        const childTitle = childList.find(v => pathname === v.path).title
+        const icon = menuTab.find(v => pathname.indexOf(v.name) !== -1)?.icon
+        const title = menuTab.find(v => pathname.indexOf(v.name) !== -1)?.title
+        const childTitle = childList.find(v => pathname === v.path)?.title
         setCurrentBreadcrumb({
             icon, title, childTitle
         })
 
-        setDefaultOpenKeys([menuTab.find(v => pathname.indexOf(v.name) !== -1).key])
-        setDefaultSelectedKeys([childList.find(v => pathname === v.path).key])
+        setDefaultOpenKeys([menuTab.find(v => pathname.indexOf(v.name) !== -1)?.key])
+        setDefaultSelectedKeys([childList.find(v => pathname === v.path)?.key])
     }, [pathname])
 
     return {

@@ -38,7 +38,7 @@ export default [
     {
         path: '',
         element: <Navigate
-            to={ 'home' }
+            to={ 'dashboard' }
             replace
         />,
         index: true

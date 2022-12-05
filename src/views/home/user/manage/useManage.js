@@ -132,6 +132,11 @@ export const useManage = () => {
         setPageIndex(a)
     }
 
+    const tableFresh = () => {
+        const flag = flagGet + 1
+        setFlagGet(flag)
+    }
+
     useEffect(() => {
         getTableData()
     }, [flagGet, pageIndex])
@@ -146,6 +151,7 @@ export const useManage = () => {
         dataList,
         total,
         pageChange,
-        pageIndex
+        pageIndex,
+        tableFresh
     }
 }

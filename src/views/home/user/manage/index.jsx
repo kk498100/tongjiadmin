@@ -21,7 +21,8 @@ const PageUserManage = () => {
         dataList,
         total,
         pageIndex,
-        pageChange
+        pageChange,
+        tableFresh
     } = useManage()
 
     return (
@@ -48,6 +49,7 @@ const PageUserManage = () => {
                 total={ total }
                 pageChange={ pageChange }
                 pageIndex={ pageIndex }
+                tableFresh={ tableFresh }
             />, [flagInit, loading, dataList, total, pageIndex]) }
         </>
     )

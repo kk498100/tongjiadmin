@@ -29,3 +29,11 @@ export const fetchNoReadNotify = (data = {}) =>
  */
 export const fetchManageList = (data = {}) =>
     request.post(`${ prefix }/manageList`, data)
+
+/**
+ * @description 修改管理员值班休息状态api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchChangeStatus = (data = {}) =>
+    request.post(`${ prefix }/changeStatus`, data)
