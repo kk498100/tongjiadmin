@@ -1,6 +1,7 @@
-import { Form } from '@arco-design/web-react'
+import { Form, Message } from '@arco-design/web-react'
 import { useEffect, useState } from 'react'
-import { fetchManageList } from '@/api/user.js'
+import { fetchEditManage, fetchManageList } from '@/api/user.js'
+import { useManageStore } from '@/store/user.js'
 
 export const useManage = () => {
     const searchFormSetting = [
@@ -114,6 +115,14 @@ export const useManage = () => {
 
     const [form] = Form.useForm()
 
+    useEffect(() => {
+        const params = {}
+        searchFormSetting.map(v => v.children?.length && v.children?.map(e => {
+            (typeof e.defaultValue !== 'undefined') && (params[e.field] = e.defaultValue)
+        }))
+        form.setFieldsValue(params)
+    }, [])
+
     const resetForm = () => {
         form.resetFields()
     }
@@ -153,5 +162,71 @@ export const useManage = () => {
         pageChange,
         pageIndex,
         tableFresh
+    }
+}
+
+export const useDrawerEdit = (tableFresh) => {
+    const visible = useManageStore(state => state.drawerVisible)
+    const setDrawerVisible = useManageStore(state => state.setDrawerVisible)
+    const editType = useManageStore(state => state.editType)
+    const editId = useManageStore(state => state.editInfo?.id)
+    const editInfo = useManageStore(state => state.editInfo)
+
+    const [form] = Form.useForm()
+
+    const [drawerTitle, setDrawerTitle] = useState('')
+
+    const [drawerLoading, setDrawerLoading] = useState(false)
+
+    useEffect(() => {
+        switch (editType) {
+            case 'add':
+                return setDrawerTitle('新增管理员')
+            case 'edit':
+                form.setFieldsValue({ name: editInfo?.name, nick: editInfo?.nick, phone: editInfo?.phone })
+                return setDrawerTitle('编辑管理员信息')
+            default:
+                return '未知'
+        }
+    }, [editType, editInfo])
+
+    // 关闭抽屉
+    const drawerClose = () => {
+        form.resetFields()
+        setDrawerVisible(false)
+        setDrawerLoading(false)
+    }
+
+    const drawerConfirm = async () => {
+        try {
+            if (drawerLoading) return
+            setDrawerLoading(true)
+            const params = await form.validate()
+            editId && (editType === 'edit') && Object.assign(params, { id: editId })
+            const res = await fetchEditManage({
+                type: editType,
+                ...params
+            })
+            if (editId && res && editType === 'edit') {
+                Message.success('管理员信息已更新')
+            } else {
+                Message.success('新增管理员成功')
+            }
+            tableFresh()
+            drawerClose()
+        } catch (e) {
+            console.warn(e)
+        } finally {
+            setDrawerLoading(false)
+        }
+    }
+
+    return {
+        visible,
+        drawerTitle,
+        drawerClose,
+        drawerConfirm,
+        drawerLoading,
+        form
     }
 }

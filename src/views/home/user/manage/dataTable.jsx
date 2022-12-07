@@ -4,6 +4,7 @@ import Online from '@/components/Online/index.jsx'
 import dayjs from 'dayjs'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { fetchChangeStatus } from '@/api/user.js'
+import { useManageStore } from '@/store/user.js'
 
 const DataModal = forwardRef((props, ref) => {
     const [offVisible, setOffVisible] = useState(false)
@@ -101,6 +102,9 @@ const DataTable = props => {
         tableFresh
     } = props
 
+    const setEditType = useManageStore(state => state.setEditType)
+    const setEditInfo = useManageStore(state => state.setEditInfo)
+
     const modalRef = useRef(null)
 
     const offClick = () => {
@@ -119,14 +123,19 @@ const DataTable = props => {
         setOnlineVisible(true)
     }
 
+    const editClick = info => {
+        setEditInfo(info)
+        setEditType('edit')
+    }
+
     const columns = [
-        {
-            title: '昵称',
-            dataIndex: 'nick'
-        },
         {
             title: '姓名',
             dataIndex: 'name'
+        },
+        {
+            title: '昵称',
+            dataIndex: 'nick'
         },
         {
             title: '手机号',
@@ -176,7 +185,8 @@ const DataTable = props => {
                                   onClick={ onlineClick }>值班</Button>
                     }
                     <Button type='primary'
-                            size='mini'>编辑</Button>
+                            size='mini'
+                            onClick={ () => editClick(item) }>编辑</Button>
 
                     <DataModal ref={ modalRef } { ...{ item, tableFresh } } />
                 </Space>

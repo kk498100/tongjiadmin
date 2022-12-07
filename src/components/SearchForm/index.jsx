@@ -19,8 +19,7 @@ const SearchFormItem = props => {
                 case 'select':
                     return <Select
                         placeholder={ v.placeholder }
-                        defaultValue={ v.defaultValue }
-                        style={{ width: '120px' }}
+                        style={ { width: '120px' } }
                     >
                         { v.options.map(i => <Select.Option
                             key={ i.value }
@@ -39,15 +38,15 @@ const SearchFormItem = props => {
         }
     </Form.Item>)
 }
-const SearchForm = ({
-                        children = <></>,
-                        formSetting = [],
-                        form = null
-                    }) => {
-    return (
-        <Form
-            size='mini'
-            form={ form }>
+    const SearchForm = ({
+                            children = <></>,
+                            formSetting = [],
+                            form = null
+                        }) => {
+        return (
+            <Form
+                size='mini'
+                form={ form }>
             <Space
                 size={ 12 }
                 direction='vertical'
@@ -61,9 +60,9 @@ const SearchForm = ({
                     </div>)
                 }
             </Space>
-            { children }
+                { children }
         </Form>
-    )
-}
+        )
+    }
 
-export default SearchForm
+    export default SearchForm

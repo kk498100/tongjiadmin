@@ -5,10 +5,12 @@
  */
 import SearchForm from '@/components/SearchForm/index.jsx'
 import DataTable from './dataTable.jsx'
+import EditDrawer from './editDrawer.jsx'
 import { useManage } from './useManage.js'
 import { Button, Divider, Space } from '@arco-design/web-react'
 import styles from './index.module.scss'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
+import { useManageStore } from '@/store/user.js'
 
 const PageUserManage = () => {
     const {
@@ -25,6 +27,9 @@ const PageUserManage = () => {
         tableFresh
     } = useManage()
 
+    const editInfo = useManageStore(state => state.editInfo)
+    const setEditType = useManageStore(state => state.setEditType)
+
     return (
         <>
             <SearchForm
@@ -37,9 +42,15 @@ const PageUserManage = () => {
                         type='primary'
                         onClick={ submit }>搜索</Button>
                     <Button onClick={ resetForm }>重置</Button>
-                    <Button type='primary'>新增管理员</Button>
+                    <Button
+                        type='primary'
+                        onClick={ () => setEditType('add') }
+                    >
+                        新增管理员
+                    </Button>
                 </Space>
             </SearchForm>
+
             <Divider style={ { borderBottomStyle: 'dashed' } } />
 
             { useMemo(() => <DataTable
@@ -51,6 +62,8 @@ const PageUserManage = () => {
                 pageIndex={ pageIndex }
                 tableFresh={ tableFresh }
             />, [flagInit, loading, dataList, total, pageIndex]) }
+
+            { useMemo(() => <EditDrawer tableFresh={ tableFresh } />, [editInfo]) }
         </>
     )
 }

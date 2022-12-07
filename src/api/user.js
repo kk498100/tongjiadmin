@@ -37,3 +37,11 @@ export const fetchManageList = (data = {}) =>
  */
 export const fetchChangeStatus = (data = {}) =>
     request.post(`${ prefix }/changeStatus`, data)
+
+/**
+ * @description 添加/编辑后台用户api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchEditManage = (data = {}) =>
+    request.post(`${ prefix }/editUser`, data)
