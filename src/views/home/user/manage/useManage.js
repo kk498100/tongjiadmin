@@ -115,23 +115,25 @@ export const useManage = () => {
 
     const [form] = Form.useForm()
 
-    useEffect(() => {
+    const formInit = () => {
+        form.resetFields()
         const params = {}
         searchFormSetting.map(v => v.children?.length && v.children?.map(e => {
             (typeof e.defaultValue !== 'undefined') && (params[e.field] = e.defaultValue)
         }))
         form.setFieldsValue(params)
+    }
+
+    useEffect(() => {
+        formInit()
     }, [])
 
     const resetForm = () => {
-        form.resetFields()
+        formInit()
     }
 
     const submit = async () => {
-        const data = await form.validate()
-        await setFormData(data)
-        const flag = flagGet + 1
-        setFlagGet(flag)
+        tableFresh()
     }
 
     const pageChange = (pagination) => {
@@ -141,7 +143,10 @@ export const useManage = () => {
         setPageIndex(a)
     }
 
-    const tableFresh = () => {
+    const tableFresh = async () => {
+        const data = await form.validate()
+        await setFormData(data)
+        setPageIndex(1)
         const flag = flagGet + 1
         setFlagGet(flag)
     }

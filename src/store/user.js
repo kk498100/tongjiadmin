@@ -25,3 +25,10 @@ export const useManageStore = create(set => ({
     }),
     setEditInfo: info => set(() => ({ editInfo: info }))
 }))
+
+export const useMiniprogramStore = create(set => ({
+    drawerVisible: false,
+    setDrawerVisible: visible => set(() => ({ drawerVisible: visible })),
+    userInfo: {},
+    setUserInfo: info => set(() => ({ userInfo: info }))
+}))

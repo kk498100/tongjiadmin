@@ -45,3 +45,19 @@ export const fetchChangeStatus = (data = {}) =>
  */
 export const fetchEditManage = (data = {}) =>
     request.post(`${ prefix }/editUser`, data)
+
+/**
+ * @description 获取小程序用户列表api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchMiniprogramList = (data = {}) =>
+    request.post(`${ prefix }/miniprogramList`, data)
+
+/**
+ * @description 获取小程序用户问卷列表api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchMiniprogramQuestionList = (data = {}) =>
+    request.post(`${ prefix }/questionList`, data)
