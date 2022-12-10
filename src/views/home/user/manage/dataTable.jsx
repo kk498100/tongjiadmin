@@ -19,24 +19,25 @@ const DataModal = forwardRef((props, ref) => {
     }))
 
     const {
-        item: {
-            id = null,
-            nick = ''
-        },
+        itemData,
         tableFresh
     } = props
 
     const offConfirmClick = async () => {
         try {
             if (offLoading) return
+            const {
+                id: a = null,
+                nick: b = null
+            } = itemData
             setOffLoading(true)
             const params = {
-                ids: id instanceof Array ? id : [id],
+                ids: a instanceof Array ? a : [a],
                 status: 2
             }
             await fetchChangeStatus(params)
             tableFresh()
-            Message.success(`${ nick }状态已设置为休息中!`)
+            Message.success(`${ b }状态已设置为休息中!`)
             setOffVisible(false)
         } catch (e) {
             console.log(e)
@@ -48,19 +49,23 @@ const DataModal = forwardRef((props, ref) => {
     const onlineConfirmClick = async () => {
         try {
             if (offLoading) return
-            setOffLoading(true)
+            const {
+                id: a = null,
+                nick: b = null
+            } = itemData
+            setOnlineLoading(true)
             const params = {
-                ids: id instanceof Array ? id : [id],
+                ids: a instanceof Array ? a : [a],
                 status: 1
             }
             await fetchChangeStatus(params)
             tableFresh()
-            Message.success(`${ nick }状态已设置为值班中!`)
-            setOffVisible(false)
+            Message.success(`${ b }状态已设置为值班中!`)
+            setOnlineVisible(false)
         } catch (e) {
             console.log(e)
         } finally {
-            setOffLoading(false)
+            setOnlineLoading(false)
         }
     }
 
@@ -106,20 +111,21 @@ const DataTable = props => {
     const setEditInfo = useManageStore(state => state.setEditInfo)
 
     const modalRef = useRef(null)
+    const [itemData, setItemData] = useState(null)
 
-    const offClick = () => {
+    const offClick = item => {
         const {
             setOffVisible
         } = modalRef.current
-
+        setItemData(item)
         setOffVisible(true)
     }
 
-    const onlineClick = () => {
+    const onlineClick = item => {
         const {
             setOnlineVisible
         } = modalRef.current
-
+        setItemData(item)
         setOnlineVisible(true)
     }
 
@@ -179,16 +185,14 @@ const DataTable = props => {
                     { a === 1
                         ? <Button type='primary'
                                   size='mini'
-                                  onClick={ offClick }>休息</Button>
+                                  onClick={() => offClick(item) }>休息</Button>
                         : <Button type='primary'
                                   size='mini'
-                                  onClick={ onlineClick }>值班</Button>
+                                  onClick={() => onlineClick(item) }>值班</Button>
                     }
                     <Button type='primary'
                             size='mini'
                             onClick={ () => editClick(item) }>编辑</Button>
-
-                    <DataModal ref={ modalRef } { ...{ item, tableFresh } } />
                 </Space>
             }
         }
@@ -211,6 +215,8 @@ const DataTable = props => {
                 imgSrc='//p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a0082b7754fbdb2d98a5c18d0b0edd25.png~tplv-uwbnlip3yd-webp.webp'
                 description='暂无管理员数据' /> }
         /> }
+
+        <DataModal ref={ modalRef } { ...{ itemData, tableFresh } } />
     </>
 }
 

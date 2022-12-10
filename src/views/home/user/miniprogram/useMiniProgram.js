@@ -125,8 +125,7 @@ export const useMiniProgram = () => {
         const data = await form.validate()
         await setFormData(data)
         setPageIndex(1)
-        const flag = flagGet + 1
-        setFlagGet(flag)
+        setFlagGet(Math.random())
     }
 
     useEffect(() => {

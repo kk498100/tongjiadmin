@@ -1,0 +1,36 @@
+@import "../../../../assets/styles/_variable.scss";
+
+.search-form {
+  &--append {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+}
+
+.data-table {
+  .arco-table-cell-wrap-value,
+  .arco-table-th-item-title {
+    white-space: nowrap;
+  }
+
+  &--important {
+    color: $danger-6;
+  }
+
+  &--no-important {
+    color: $primary;
+  }
+
+  &--use {
+    color: $primary;
+  }
+
+  &--no-use {
+    color: $warning-7;
+  }
+
+  &--discard {
+    color: $info;
+  }
+}

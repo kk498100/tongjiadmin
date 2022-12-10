@@ -5,6 +5,7 @@ import PageNotFound from '@/views/notFound/index.jsx'
 
 const PageQuestionList = lazy(() => import('./list'))
 const PageQuestionData = lazy(() => import('./data'))
+const PageQuestionSubmitList = lazy(() => import('./submit'))
 
 export default [
     {
@@ -16,6 +17,14 @@ export default [
                 errorElement: <PageError errorMsg={ '页面出错啦' } />,
                 loader: () => {
                     window.document.title = '用户中心 - 问卷列表'
+                }
+            },
+            {
+                path: 'submitList',
+                element: <PageQuestionSubmitList />,
+                errorElement: <PageError errorMsg={ '页面出错啦' } />,
+                loader: () => {
+                    window.document.title = '用户中心 - 填报列表'
                 }
             },
             {

@@ -89,8 +89,14 @@ export const useLayoutMenu = () => {
                     role: [1, 2]
                 },
                 {
-                    title: '统计数据',
+                    title: '填报列表',
                     key: '3_2',
+                    path: '/question/submitList',
+                    role: [1, 2]
+                },
+                {
+                    title: '统计数据',
+                    key: '3_3',
                     path: '/question/data',
                     role: [1]
                 }
