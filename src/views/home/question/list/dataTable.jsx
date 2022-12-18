@@ -3,6 +3,11 @@ import styles from './index.module.scss'
 import dayjs from 'dayjs'
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 import { fetchChangeStatus } from '@/api/question.js'
+import PhonePreview from '@/components/PhonePreview/index.jsx'
+
+const DataPreview = props => {
+    return <div className={styles.dataPreviewContent}>321312</div>
+}
 
 const DataModal = forwardRef((props, ref) => {
     const [useVisible, setUseVisible] = useState(false)
@@ -123,6 +128,23 @@ const DataTable = props => {
         setDiscardVisible(true)
     }
 
+    const previewRef = useRef(null)
+    const [previewTitle, setPreviewTitle] = useState('')
+    const [previewId, setPreviewId] = useState(null)
+
+    const showPreviewDrawer = item => {
+        const {
+            setVisible
+        } = previewRef.current
+        const {
+            title,
+            id
+        } = item
+        setVisible(true)
+        setPreviewTitle(`${ title }问卷预览`)
+        setPreviewId(id)
+    }
+
     const columns = [
         {
             title: '标题',
@@ -233,7 +255,8 @@ const DataTable = props => {
                     }
                     <Button
                         type='primary'
-                        size='mini'>
+                        size='mini'
+                        onClick={ () => showPreviewDrawer(item) }>
                         预览
                     </Button>
                 </Space>
@@ -260,6 +283,12 @@ const DataTable = props => {
         /> }
 
         <DataModal ref={ modalRef } { ...{ itemData, tableFresh } } />
+
+        <PhonePreview
+            ref={ previewRef }
+            title={ previewTitle }>
+            <DataPreview id={ previewId } />
+        </PhonePreview>
     </>
 }
 
