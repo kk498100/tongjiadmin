@@ -21,3 +21,43 @@ export const fetchBaseInfo = (data = {}) =>
  */
 export const fetchNoReadNotify = (data = {}) =>
     request.post(`${ prefix }/noread`, data)
+
+/**
+ * @description 获取管理员列表api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchManageList = (data = {}) =>
+    request.post(`${ prefix }/manageList`, data)
+
+/**
+ * @description 修改管理员值班休息状态api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchChangeStatus = (data = {}) =>
+    request.post(`${ prefix }/changeStatus`, data)
+
+/**
+ * @description 添加/编辑后台用户api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchEditManage = (data = {}) =>
+    request.post(`${ prefix }/editUser`, data)
+
+/**
+ * @description 获取小程序用户列表api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchMiniprogramList = (data = {}) =>
+    request.post(`${ prefix }/miniprogramList`, data)
+
+/**
+ * @description 获取小程序用户问卷列表api
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const fetchMiniprogramQuestionList = (data = {}) =>
+    request.post(`${ prefix }/questionList`, data)

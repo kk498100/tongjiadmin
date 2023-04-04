@@ -1,5 +1,4 @@
 import styles from './index.module.scss'
-import { useEffect, useState } from 'react'
 
 const Online = props => {
     const {
@@ -7,11 +6,7 @@ const Online = props => {
         fontSize: b = 12
     } = props
 
-    const [statusText, setStatusTex] = useState('休息中')
-
-    useEffect(() => {
-        a === 1 ? setStatusTex('值班中') : setStatusTex('休息中')
-    }, [a])
+    const statusText = a === 1 ? '值班中' : '休息中'
 
     return (
         <div className={ styles.online }>

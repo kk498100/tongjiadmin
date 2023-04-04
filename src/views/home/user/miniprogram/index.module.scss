@@ -1,0 +1,19 @@
+.search-form{
+  &--append {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+  }
+}
+
+.data-table {
+  .arco-table-cell-wrap-value,
+  .arco-table-th-item-title {
+    white-space: nowrap;
+  }
+}
+
+.echarts-container {
+  width: 100%;
+  height: 100%;
+}

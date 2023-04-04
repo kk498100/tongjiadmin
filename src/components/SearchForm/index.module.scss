@@ -1,0 +1,37 @@
+@import "../../assets/styles/_variable.scss";
+
+.form {
+  &-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: auto;
+
+    &:not(:last-child) {
+      margin-right: 8px;
+    }
+
+    &-label {
+      font: {
+        size: 12px;
+      }
+      color: $color-text-3;
+      white-space: nowrap;
+    }
+
+    .arco-form-item-wrapper {
+      width: auto;
+      flex: none;
+    }
+
+    .arco-form-label-item {
+      padding-right: 6px;
+      width: auto;
+      flex: none;
+
+      &>label {
+        white-space: nowrap;
+      }
+    }
+  }
+}

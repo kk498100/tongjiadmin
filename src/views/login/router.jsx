@@ -1,5 +1,5 @@
-import {lazy} from "react";
-const PageLogin = lazy(() => import('./Index.jsx'))
+import PageLogin from './Index.jsx'
+import PageError from '@/views/errorPage/index'
 
 export default [{
     path: '/login',
@@ -7,5 +7,6 @@ export default [{
     loader: () => {
         return window.document.title = '管理后台 - 用户登陆'
     },
-    index: true
+    index: true,
+    errorElement: <PageError />
 }]
